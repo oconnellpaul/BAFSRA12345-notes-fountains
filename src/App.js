@@ -14,7 +14,7 @@ function App({ signOut }) {
     <View className="App">
       <Card>
         <Image src={logo} className="App-logo" alt="logo" />
-        <Heading level={1}>...We now have Auth! - why wont this update</Heading>
+        <Heading level={1}>...We now have Auth! ok - why wont this update</Heading>
       </Card>
       <Button onClick={signOut}>Sign Out</Button>
     </View>
