@@ -1,24 +1,51 @@
-import logo from "./logo.svg";
-import "@aws-amplify/ui-react/styles.css";
-import {
-  withAuthenticator,
-  Button,
-  Heading,
-  Image,
-  View,
-  Card,
-} from "@aws-amplify/ui-react";
+import { Authenticator } from '@aws-amplify/ui-react';
 
-function App({ signOut }) {
+import { Protected } from './components/Protected';
+import { RequireAuth } from './RequireAuth';
+import { Login } from './components/Login';
+import { ProtectedSecond } from './components/ProtectSecond';
+import { Home } from './components/Home';
+import { Layout } from './components/Layout';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import './App.css';
+
+function MyRoutes() {
   return (
-    <View className="App">
-      <Card>
-        <Image src={logo} className="App-logo" alt="logo" />
-        <Heading level={1}>...We now have Auth! ok OK! ok- why wont this update</Heading>
-      </Card>
-      <Button onClick={signOut}>Sign Out</Button>
-    </View>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route
+            path="/protected"
+            element={
+              <RequireAuth>
+                <Protected />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/protected2"
+            element={
+              <RequireAuth>
+                <ProtectedSecond />
+              </RequireAuth>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default withAuthenticator(App);
+function App() {
+  return (
+    <Authenticator.Provider>
+      <MyRoutes />
+    </Authenticator.Provider>
+  );
+}
+
+export default App;
